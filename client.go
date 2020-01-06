@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"fmt"
 	"net/http"
+	"strings"
 	"time"
 
 	fhttp "github.com/go-friday/http"
@@ -97,13 +97,11 @@ func (c *client) SendRequest(ctx context.Context, path string, req Request, res 
 }
 
 func (c *client) GetBalance(ctx context.Context) (int64, error) {
-	var res BalanceResponse
-	err := c.SendRequest(ctx,
-		"/api/pay/balance", &BalanceRequest{
-			Password: c.password,
-		},
-		&res,
-	)
+	req := &BalanceRequest{
+		Password: c.password,
+	}
+	res := &BalanceResponse{}
+	err := c.SendRequest(ctx, "/api/pay/balance", req, res)
 	if err == nil {
 		return res.Amount, nil
 	}
@@ -111,13 +109,11 @@ func (c *client) GetBalance(ctx context.Context) (int64, error) {
 }
 
 func (c *client) CheckInfo(ctx context.Context, walletID string) (*AccountInfo, error) {
-	var res CheckInfoResponse
-	err := c.SendRequest(ctx,
-		"/api/pay/check-info", &CheckInfoRequest{
-			WalletID: walletID,
-		},
-		&res,
-	)
+	req := &CheckInfoRequest{
+		WalletID: walletID,
+	}
+	res := &CheckInfoResponse{}
+	err := c.SendRequest(ctx, "/api/pay/check-info", req, res)
 	if err == nil {
 		return &res.AccountInfo, nil
 	}
@@ -125,32 +121,52 @@ func (c *client) CheckInfo(ctx context.Context, walletID string) (*AccountInfo, 
 }
 
 func (c *client) PaymentPay(ctx context.Context, info *PayInfo) (*PayTransaction, error) {
-	var res PaymentPayResponse
-	err := c.SendRequest(ctx,
-		"/api/payment/pay", &PaymentPayRequest{
-			Password: c.password,
-			PayInfo:  info,
-		},
-		&res,
-	)
+	req := &PaymentPayRequest{
+		Password: c.password,
+		PayInfo:  info,
+	}
+	res := &PaymentPayResponse{}
+	err := c.SendRequest(ctx, "/api/payment/pay", req, res)
 	if err == nil {
 		return &res.PayTransaction, nil
 	}
 	return nil, err
 }
 
-func (c *client) PaymentStatus(ctx context.Context, paymentID string) (*PaymentPayResponse, error) {
-	var res PaymentStatusResponse
-	err := c.SendRequest(ctx,
-		"/api/payment/status", &PaymentStatusRequest{
-			PaymentID: paymentID,
-		},
-		&res,
-	)
-	if err == nil {
-		return res.Data, nil
+func (c *client) PaymentStatus(ctx context.Context, paymentID string) (Response, error) {
+	req := &PaymentStatusRequest{
+		PaymentID: paymentID,
 	}
-	return nil, err
+	res := &PaymentStatusResponse{}
+	err := c.SendRequest(ctx, "/api/payment/status", req, res)
+	if err == nil {
+		basic := &BasicResponse{}
+		if err = json.Unmarshal(res.Data, basic); err != nil {
+			return nil, &GenericError{
+				BaseErr:   err,
+				RequestID: req.RequestID,
+			}
+		}
+
+		// Detect method base on ReferenceID
+		if strings.HasPrefix(basic.ReferenceID, "PAY_") {
+			pay := &PaymentPayResponse{}
+			if err = json.Unmarshal(res.Data, pay); err != nil {
+				return nil, &GenericError{
+					BaseErr:   err,
+					RequestID: req.RequestID,
+				}
+			}
+			return pay, nil
+		}
+
+		return nil, nil
+	}
+
+	return nil, &GenericError{
+		BaseErr:   err,
+		RequestID: req.RequestID,
+	}
 }
 
 func (c *client) GetTransactions(ctx context.Context, date time.Time) error {
@@ -159,7 +175,6 @@ func (c *client) GetTransactions(ctx context.Context, date time.Time) error {
 		Password: c.password,
 		Date:     date.Format("2006/01/02"),
 	}
-	fmt.Println(req)
 	err := c.SendRequest(ctx, "/api/payment/get-trans", req, res)
 	if err == nil {
 		return nil

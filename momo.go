@@ -2,6 +2,7 @@ package momo
 
 import (
 	"context"
+	"encoding/json"
 	"time"
 
 	"github.com/google/uuid"
@@ -86,7 +87,7 @@ type PaymentStatusRequest struct {
 
 type PaymentStatusResponse struct {
 	BasicResponse
-	Data *PaymentPayResponse `json:"data"`
+	Data json.RawMessage `json:"data"`
 }
 
 type TransactionsRequest struct {
@@ -113,5 +114,5 @@ type Client interface {
 	GetBalance(ctx context.Context) (int64, error)
 	GetTransactions(ctx context.Context, date time.Time) error
 	PaymentPay(ctx context.Context, info *PayInfo) (*PayTransaction, error)
-	PaymentStatus(ctx context.Context, paymentID string) (*PaymentPayResponse, error)
+	PaymentStatus(ctx context.Context, paymentID string) (Response, error)
 }
