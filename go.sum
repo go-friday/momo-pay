@@ -1,0 +1,17 @@
+github.com/go-friday/http v0.0.0-20200101182753-60e021b0ccac h1:IeLQSfE068u1iPc7ehaJ9umwx6exgHGhvZivA4j5lXQ=
+github.com/go-friday/http v0.0.0-20200101182753-60e021b0ccac/go.mod h1:8p0WVjCDWPuLIyuYyrD5lFLmDxjOFs7w2VRyFxs5WjI=
+github.com/go-friday/transportpgp v0.0.2 h1:wQGRwuwcVTz9o4CTy3Jt576WaL7zKBdF3T02Cs/sSGc=
+github.com/go-friday/transportpgp v0.0.2/go.mod h1:E2l5FaBw9eYfYvajvLttUhzDi6+LEuOb3LP1Ybv6tbk=
+github.com/go-friday/transportpgp v0.0.3-0.20200101180951-98005b0523aa h1:ij896aAzYtkHFm2tysz61sxRMapQqmmHbHZojHbbJO4=
+github.com/go-friday/transportpgp v0.0.3-0.20200101180951-98005b0523aa/go.mod h1:E2l5FaBw9eYfYvajvLttUhzDi6+LEuOb3LP1Ybv6tbk=
+github.com/go-friday/transportpgp v0.0.3 h1:BU3GBTTvroydjpCbfTvnt3kES+UIDSvSKyJbgLwOSRo=
+github.com/go-friday/transportpgp v0.0.3/go.mod h1:E2l5FaBw9eYfYvajvLttUhzDi6+LEuOb3LP1Ybv6tbk=
+github.com/google/uuid v1.1.1 h1:Gkbcsh/GbpXz7lPftLA3P6TYMwjCLYm83jiFQZF/3gY=
+github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
+golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
+golang.org/x/crypto v0.0.0-20191219195013-becbf705a915 h1:aJ0ex187qoXrJHPo8ZasVTASQB7llQP6YeNzgDALPRk=
+golang.org/x/crypto v0.0.0-20191219195013-becbf705a915/go.mod h1:LzIPMQfyMNhhGPhUkYOs5KpL4U8rLKemX1yGLhDgUto=
+golang.org/x/net v0.0.0-20190404232315-eb5bcb51f2a3/go.mod h1:t9HGtf8HONx5eT2rtn7q6eTqICYqUVnKs3thJo3Qplg=
+golang.org/x/sys v0.0.0-20190215142949-d0b11bdaac8a/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
+golang.org/x/sys v0.0.0-20190412213103-97732733099d/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
+golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
