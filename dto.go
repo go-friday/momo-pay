@@ -4,6 +4,13 @@ import (
 	"time"
 )
 
+type AccountInfo struct {
+	Name      string `json:"name"`
+	Email     string `json:"email"`
+	Mobile    string `json:"mobile"`
+	IsNonBank bool   `json:"isNonBank"`
+}
+
 type PayInfo struct {
 	Amount      int64     `json:"amount"`
 	Created     time.Time `json:"created,omitempty"`

@@ -62,13 +62,6 @@ type CheckInfoResponse struct {
 	AccountInfo AccountInfo `json:"accountInfo"`
 }
 
-type AccountInfo struct {
-	Name      string `json:"name"`
-	Email     string `json:"email"`
-	Mobile    string `json:"mobile"`
-	IsNonBank bool   `json:"isNonBank"`
-}
-
 type PaymentPayRequest struct {
 	BasicRequest
 	Password string `json:"password"`
